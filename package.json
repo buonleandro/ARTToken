@@ -1,0 +1,7 @@
+{
+  "name": "ARToken",
+  "version": "1.0.0",
+  "dependencies": {
+    "eth-lib": "^0.1.29"
+  }
+}
