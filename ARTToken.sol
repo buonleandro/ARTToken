@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract ARToken is
+contract ARTToken is
 Context,
 AccessControlEnumerable,
 ERC721Enumerable,
