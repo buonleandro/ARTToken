@@ -15,18 +15,18 @@ ERC721URIStorage
 {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    string private _internalBaseURI;
+    string private _internalBase64Image;
 
     constructor(
         string memory name,
         string memory symbol,
-        string memory baseURI
+        string memory base64Image
     ) public ERC721(name, symbol) {
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
 
         _setupRole(MINTER_ROLE, _msgSender());
 
-        _internalBaseURI = baseURI;
+        _internalBase64Image = *PLACEHOLDER*;
     }
 
     function burn(uint256 tokenId) public virtual {
@@ -49,13 +49,13 @@ ERC721URIStorage
         super.supportsInterface(interfaceId);
     }
 
-    function setBaseURI(string memory newBaseUri) public {
+    function setBase64Image(string memory newBase64Image) public {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721: must have admin role to change baseUri"
+            "ERC721: must have admin role to change Base64Image"
         );
 
-        _internalBaseURI = newBaseUri;
+        _internalBase64Image = newBase64Image;
     }
 
     function mint(address to, uint256 tokenId) public virtual {
@@ -93,11 +93,11 @@ ERC721URIStorage
         super._burn(tokenId);
     }
 
-    function _baseURI() internal view override returns (string memory) {
-        return _internalBaseURI;
+    function _Base64Image() internal view override returns (string memory) {
+        return _internalBase64Image;
     }
 
-    function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
+    function setTokenB64I(uint256 tokenId, string memory _tokenURI) public {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "ERC721: must have admin role to set Token URIs"
