@@ -16,17 +16,22 @@ contract ARTToken is
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     string private _internalBaseURI;
+    string private _hash;
 
     constructor(
         string memory name,
         string memory symbol,
-        string memory baseURI
+        string memory baseURI,
+        string memory hash
     ) public ERC721(name, symbol) {
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
 
         _setupRole(MINTER_ROLE, _msgSender());
 
         _internalBaseURI = baseURI;
+        
+        _hash = hash;
+  
     }
 
     function burn(uint256 tokenId) public virtual {
@@ -55,6 +60,14 @@ contract ARTToken is
             "ERC721: must have admin role to change baseUri"
         );
         _internalBaseURI = newBaseUri;
+    }
+    
+    function setHash(string memory newHash) public {
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "ERC721: must have admin role to change baseUri"
+        );
+       _hash = newHash;
     }
 
     function mint(address to, uint256 tokenId) public virtual {
