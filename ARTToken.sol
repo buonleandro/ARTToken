@@ -8,25 +8,25 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 contract ARTToken is
-Context,
-AccessControlEnumerable,
-ERC721Enumerable,
-ERC721URIStorage
+    Context,
+    AccessControlEnumerable,
+    ERC721Enumerable,
+    ERC721URIStorage
 {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    string private _internalBase64Image;
+    string private _internalBaseURI;
 
     constructor(
         string memory name,
         string memory symbol,
-        string memory base64Image
+        string memory baseURI
     ) public ERC721(name, symbol) {
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
 
         _setupRole(MINTER_ROLE, _msgSender());
 
-        _internalBase64Image = *PLACEHOLDER*;
+        _internalBaseURI = baseURI;
     }
 
     function burn(uint256 tokenId) public virtual {
@@ -38,24 +38,23 @@ ERC721URIStorage
     }
 
     function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC721Enumerable, AccessControlEnumerable, ERC721)
-    returns (bool)
+        public
+        view
+        virtual
+        override(ERC721Enumerable, AccessControlEnumerable, ERC721)
+        returns (bool)
     {
         return
-        interfaceId == type(IERC721Enumerable).interfaceId ||
-        super.supportsInterface(interfaceId);
+            interfaceId == type(IERC721Enumerable).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 
-    function setBase64Image(string memory newBase64Image) public {
+    function setBaseURI(string memory newBaseUri) public {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721: must have admin role to change Base64Image"
+            "ERC721: must have admin role to change baseUri"
         );
-
-        _internalBase64Image = newBase64Image;
+        _internalBaseURI = newBaseUri;
     }
 
     function mint(address to, uint256 tokenId) public virtual {
@@ -68,11 +67,11 @@ ERC721URIStorage
     }
 
     function tokenURI(uint256 tokenId)
-    public
-    view
-    virtual
-    override(ERC721URIStorage, ERC721)
-    returns (string memory)
+        public
+        view
+        virtual
+        override(ERC721URIStorage, ERC721)
+        returns (string memory)
     {
         return super.tokenURI(tokenId);
     }
@@ -86,18 +85,18 @@ ERC721URIStorage
     }
 
     function _burn(uint256 tokenId)
-    internal
-    virtual
-    override(ERC721, ERC721URIStorage)
+        internal
+        virtual
+        override(ERC721, ERC721URIStorage)
     {
         super._burn(tokenId);
     }
 
-    function _Base64Image() internal view override returns (string memory) {
-        return _internalBase64Image;
+    function _baseURI() internal view override returns (string memory) {
+        return _internalBaseURI;
     }
 
-    function setTokenB64I(uint256 tokenId, string memory _tokenURI) public {
+    function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "ERC721: must have admin role to set Token URIs"
