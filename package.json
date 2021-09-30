@@ -1,7 +1,23 @@
 {
-  "name": "ARToken",
+  "name": "art",
   "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
-    "eth-lib": "^0.1.29"
-  }
+    "body-parser": "^1.19.0",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.1",
+    "ipfs": "^0.59.1",
+    "solc": "^0.8.0",
+    "web3": "^1.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
