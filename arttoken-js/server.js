@@ -14,24 +14,17 @@ const arttokenContract = new web3.eth.Contract([{"inputs":[{"internalType":"stri
 
 var app = express();
 app.use(cors());
-app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(limiter);
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log('listening on port 3000!');
+app.get('', function(req, res) {
+    res.sendFile(__dirname + "/" + "interface.html");
 });
 
 app.post('/createToken', async function (req, res) {
     let file = req.body.image[0];
-    let reader = new FileReader();
-    let base64String;
-    reader.onload = function () {
-        base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-    }
-    reader.readAsDataURL(file);
+    let base64String = file.Base64url;
 
     let signedObj = web3.eth.accounts.sign(base64String, pKey);
     let hash = signedObj.messageHash;
@@ -91,3 +84,7 @@ app.post('/viewTokenContent', async function(req, res){
         res.send('Unable to find or open content!')
     }
 })
+
+app.listen(process.env.PORT || 3000, function () {
+    console.log('listening on port 3000!');
+});
