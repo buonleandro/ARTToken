@@ -1,5 +1,5 @@
 var Web3 = require('web3');
-const web3 = new Web3(Web3.currentProvider);
+const web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/9e8d23220eba455f80b2f52b2f0ad833"));
 var express = require('express');
 var bodyParser = require('body-parser');
 var aes256 = require('aes256');
