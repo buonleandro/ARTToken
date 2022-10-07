@@ -88,7 +88,7 @@ contract ARTToken is
     {
         return super.tokenURI(tokenId);
     }
-
+//setti il booleano a true quando cambia proprietario
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -108,6 +108,8 @@ contract ARTToken is
     function _baseURI() internal view override returns (string memory) {
         return _internalBaseURI;
     }
+
+// invece di fare il controllo sul ruolo(admin), va fatto sul boolerano, quindi se è false questa funzione non può essere eseguita(require sul booleano), altrimenti la puoi aggiornare
 
     function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
         require(
