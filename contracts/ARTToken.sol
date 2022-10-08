@@ -17,6 +17,8 @@ contract ARTToken is
 
     string private _internalBaseURI;
     string private _hash;
+    bool private _isUpgradable;
+    
 
     constructor(
         string memory name,
@@ -31,6 +33,8 @@ contract ARTToken is
         _internalBaseURI = baseURI;
 
         _hash = hash;
+
+        _isUpgradable = false;
 
     }
 
@@ -95,6 +99,7 @@ contract ARTToken is
         uint256 tokenId
     ) internal virtual override(ERC721, ERC721Enumerable) {
         super._beforeTokenTransfer(from, to, tokenId);
+        _isUpgradable=true;
     }
 
     function _burn(uint256 tokenId)
@@ -112,10 +117,9 @@ contract ARTToken is
 // invece di fare il controllo sul ruolo(admin), va fatto sul boolerano, quindi se è false questa funzione non può essere eseguita(require sul booleano), altrimenti la puoi aggiornare
 
     function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
-        require(
-            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "ERC721: must have admin role to set Token URIs"
-        );
+        require(_isUpgradable == true, "Sorry is not upgradable");
+        //require(msg.sender == owner, "You are not the owner.");
+        
         super._setTokenURI(tokenId, _tokenURI);
     }
 }
